@@ -1,4 +1,3 @@
-export const maxDuration = 30;
 import { NextResponse } from "next/server";
 import fetchInitialPrompt from "@/helpers/fetchInitialPrompt";
 import fetchPromptWithCategories from "@/helpers/fetchPromptWithCategories";
@@ -13,7 +12,9 @@ import searchProducts from "@/utils/searchProducts";
 import getEmbeddingVector from "@/utils/getEmbeddingVector";
 import saveMessagesWithResponse from "@/utils/saveMessagesWithResponse";
 import { ObjectId } from "mongodb";
-
+export const config = {
+  maxDuration: 30,
+};
 export const POST = async (req) => {
     try {
         const { messages, chatId, userId, store } = await req.json();
