@@ -1,5 +1,5 @@
+export const maxDuration = 30;
 import { NextResponse } from "next/server";
-
 import fetchInitialPrompt from "@/helpers/fetchInitialPrompt";
 import fetchPromptWithCategories from "@/helpers/fetchPromptWithCategories";
 import getModelResponse from "@/utils/getModelResponse";
