@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
@@ -12,6 +12,22 @@ export const AuthContextProvider = ({ children }) => {
   const [chatHistory, setChatHistory] = useState({});
   const [favProducts, setFavProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (currentUser && !loading) { 
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem("currentUser");
+    }
+  }, [currentUser, loading]);
 
   const handleLogout = () => {
     setLoading(true); 
