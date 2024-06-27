@@ -18,7 +18,6 @@ const Sidebar = () => {
   const router = useRouter()
 
   useEffect(() => {
-    // Ensure sidebar is always open on medium and larger screens
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setOpen(true);
@@ -39,7 +38,7 @@ const Sidebar = () => {
         setOpen(false);
       }
     };
-
+ 
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -56,14 +55,12 @@ const Sidebar = () => {
     router.push('/')
     setMessages([]);
     if (window.innerWidth >= 768) {
-      setOpen(true);
-    } else {
       setOpen(false);
     }
   };
 
   return (
-    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${ !open ? "w-fit p-[2px] -translate-x-full" :"w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
+    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${ !open ? "w-0 p-[2px] -translate-x-full" :"w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
       <button onClick={()=>setOpen(!open)} className="md:hidden cursor-pointer">
         <FaChevronRight className="w-8 h-10 rounded-md p-2 absolute top-12 -right-6 drop-shadow-md text-gray-100 bg-blue-500" />
       </button>
@@ -93,7 +90,7 @@ const Sidebar = () => {
             </button>}
 
             {activeTab === "conversations" && (
-              <Conversations chatHistory={chatHistory} setOpen={setOpen} setActiveTab={setActiveTab}/>
+              <Conversations chatHistory={chatHistory} setOpen={setOpen} />
             )}
           </li>
           <li>

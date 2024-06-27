@@ -9,17 +9,16 @@ import { useChat } from '@/context/ChatContext';
 import Image from 'next/image';
 
 const UserInfo = ({ open, setOpen }) => {
-  const { currentUser, setCurrentUser } = useAuth();
+  const { currentUser, handleLogout } = useAuth();
   const { setMessages } = useChat();
   const [showOptions, setShowOptions] = useState(false);
   const handleToggleOptions = () => {
     setShowOptions((prev) => !prev);
   };
 
-  const handleLogout = () => {
-    setCurrentUser(null)
-    localStorage.clear();
-    setMessages([])
+  const handleUserLogout = () => {
+    handleLogout()
+    setMessages([]);
     toast.success("Logut successfully")
     setShowOptions(false);
     if (window.innerWidth >= 768) {
@@ -30,7 +29,6 @@ const UserInfo = ({ open, setOpen }) => {
   };
 
   const handleUpdateInfo = () => {
-    // Handle update info action, e.g., redirect to update profile page
     setShowOptions(false);
   };
   if (!open) {
@@ -86,7 +84,7 @@ const UserInfo = ({ open, setOpen }) => {
                   Update Info
                 </button>
                 <button
-                  onClick={handleLogout}
+                  onClick={handleUserLogout}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left"
                 >
                   <FaSignOutAlt className="inline-block w-4 h-4 mr-2" />

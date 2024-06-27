@@ -13,7 +13,7 @@ const Message = lazy(() => import("./Message"));
 const ChatContainer = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const { setChatHistory, chatHistory, store, currentUser, setFavProducts,favProducts } = useAuth();
+  const { setChatHistory, store, currentUser, setFavProducts,loading } = useAuth();
   const { messages, setMessages } = useChat();
   const chatEndRef = useRef(null);
   const searchParams = useSearchParams()
@@ -22,22 +22,24 @@ const ChatContainer = () => {
   const chatId = searchParams.get('id')
  
   useEffect(() => {
-    const fetch = async () => {
-      if (!currentUser) return;
-      await fetchConversationHistory(currentUser._id, setChatHistory)
-    }
-    return () => fetch()
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser,setChatHistory])
+    const fetchData = async () => {
+      if (currentUser && !loading) {
+        await fetchConversationHistory(currentUser._id, setChatHistory);
+      }
+    };
+    return ()=> fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    const fetch = async () => {
-      if (!currentUser) return;
-      await fetchFavoriteProducts(currentUser._id, setFavProducts)
-    }
-    return () => fetch()
+    const fetchData = async () => {
+      if (currentUser && !loading) {
+        await fetchFavoriteProducts(currentUser._id, setFavProducts);
+      }
+    };
+    return ()=>fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser,setFavProducts]);
+  }, []);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -78,7 +80,7 @@ const ChatContainer = () => {
       setIsLoading(true);
 
       try {
-        const res = await fetch("/api/test2", {
+        const res = await fetch("/api/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

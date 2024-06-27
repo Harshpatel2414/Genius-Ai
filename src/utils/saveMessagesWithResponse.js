@@ -15,7 +15,7 @@ const saveMessagesWithResponse = async (messages, chatId, userId, url) => {
             body: body
         }
 
-        const res = await fetch(new URL(url.replace("test2", "save-chat")), data);
+        const res = await fetch(new URL(url.replace("chat", "save-chat")), data);
 
         return res.json();
     } catch (error) {
