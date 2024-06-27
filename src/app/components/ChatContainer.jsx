@@ -21,25 +21,21 @@ const ChatContainer = () => {
 
   const chatId = searchParams.get('id')
  
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser && !loading) {
-        await fetchConversationHistory(currentUser._id, setChatHistory);
-      }
-    };
-    return ()=> fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const dataFetchedRef = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentUser && !loading) {
+      if (currentUser && !loading && !dataFetchedRef.current) {
+        await fetchConversationHistory(currentUser._id, setChatHistory);
         await fetchFavoriteProducts(currentUser._id, setFavProducts);
+        dataFetchedRef.current = true;
       }
     };
-    return ()=>fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    if (currentUser && !loading) {
+      fetchData();
+    }
+  }, [currentUser, loading, setChatHistory, setFavProducts]);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
