@@ -6,8 +6,11 @@ import FavoriteProducts from "./FavoriteProducts";
 import Profile from "./Profile";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
-import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight, FaChevronUp, FaRegHeart } from "react-icons/fa";
+import { FiInfo } from "react-icons/fi";
+
 import { useRouter } from "next/navigation";
+import { FaRegComment } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(null);
@@ -38,7 +41,7 @@ const Sidebar = () => {
         setOpen(false);
       }
     };
- 
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -54,14 +57,16 @@ const Sidebar = () => {
     e.preventDefault();
     router.push('/')
     setMessages([]);
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth <= 768) {
       setOpen(false);
+    } else {
+      setOpen(true)
     }
   };
 
   return (
-    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${ !open ? "w-0 p-[2px] -translate-x-full" :"w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
-      <button onClick={()=>setOpen(!open)} className="md:hidden cursor-pointer">
+    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${!open ? "w-0 p-[2px] -translate-x-full" : "w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
+      <button onClick={() => setOpen(!open)} className="md:hidden cursor-pointer">
         <FaChevronRight className="w-8 h-10 rounded-md p-2 absolute top-12 -right-6 drop-shadow-md text-gray-100 bg-blue-500" />
       </button>
       {open && <button
@@ -75,13 +80,16 @@ const Sidebar = () => {
         <ul className="space-y-2">
           <li>
             {open && <button
-              className={`w-full text-left p-2 hover:bg-blue-50 flex justify-between items-center ${activeTab === "conversations"
+              className={`w-full text-left p-2 hover:bg-blue-50 rounded flex justify-between items-center ${activeTab === "conversations"
                 ? "text-blue-500 border-b-2 border-blue-100 bg-blue-50"
-                : ""
+                : "text-gray-700"
                 }`}
               onClick={() => handleTabClick("conversations")}
             >
-              <span>Conversations</span>
+              <div className="flex items-center gap-2">
+                <FaRegComment className="w-6 h-6" />
+                <span>Conversations</span>
+              </div>
               {activeTab === "conversations" ? (
                 <FaChevronUp className="text-blue-500" />
               ) : (
@@ -95,13 +103,16 @@ const Sidebar = () => {
           </li>
           <li>
             {open && <button
-              className={`w-full text-left p-2 hover:bg-blue-50 flex justify-between items-center ${activeTab === "products"
+              className={`w-full text-left rounded p-2 hover:bg-blue-50 flex justify-between items-center ${activeTab === "products"
                 ? "text-blue-500 border-b-2 border-blue-100 bg-blue-50"
-                : ""
+                : "text-gray-700"
                 }`}
               onClick={() => handleTabClick("products")}
             >
-              <span>My Products</span>
+              <div className="flex items-center gap-2">
+                <FaRegHeart className="w-6 h-6" />
+                <span>My Products</span>
+              </div>
               {activeTab === "products" ? (
                 <FaChevronUp className="text-blue-500" />
               ) : (
@@ -115,13 +126,16 @@ const Sidebar = () => {
           </li>
           <li>
             {open && <button className="w-full text-left p-2 hover:bg-blue-50 rounded">
-              About Us
+              <div className="flex items-center gap-2 text-gray-700">
+                <FiInfo className="w-6 h-6"/>
+                <span>About Us</span>
+              </div>
             </button>}
 
           </li>
         </ul>
       </nav>
-      <Profile open={open} setOpen={setOpen}/>
+      <Profile open={open} setOpen={setOpen} />
     </aside>
   );
 };

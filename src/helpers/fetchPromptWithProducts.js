@@ -17,9 +17,9 @@ const fetchPromptWithProducts = (filteredProducts, query, assistantMessage) => {
     5. Based on the user search, select the most relevant products to recommend.
 
     6. For each selected product, generate a detailed suggestion that includes:
-    - The product title
-    - A brief description of the product
-    - The price
+        - **Title:** The product title
+        - **Description:** A brief description of the product
+        - **Price:** The price in dollars
 
     7. If the specific product the user is looking for is not available or released yet, acknowledge this and provide information on the closest available alternatives or the previous model.
 

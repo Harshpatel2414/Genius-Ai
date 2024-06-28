@@ -8,7 +8,7 @@ const FavoriteProducts = ({ favProducts }) => {
           <li key={product.id} className="p-2 bg-gray-50 drop-shadow-sm rounded hover:bg-blue-100 cursor-pointer">
             <h3 className="font-semibold truncate text-gray-700">{product.title}</h3>
             <p className="text-md text-gray-600 truncate">{product.description}</p>
-            <p className="text-sm text-gray-600">{product.price}</p>
+            <p className="text-sm text-gray-600">${product.price}</p>
           </li>
         ))
       ) : (

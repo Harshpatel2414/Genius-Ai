@@ -36,7 +36,7 @@ const LoginPage = () => {
 
         } catch (error) {
             console.error('Error:', error.message);
-        }finally {
+        } finally {
             setLoading(false);
         }
     };
@@ -82,12 +82,14 @@ const LoginPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+                        className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md ${loading ? 'cursor-not-allowed' : ''}`}
                     >
-                        { loading ? "Logging...": "Login"}
+                        {loading ? <div className='w-full flex items-center justify-center'>
+                            <FaSpinner className="animate-spin w-6 h-6 text-gray-100" />
+                        </div> : "Login"}
                     </button>
                     <div className="mt-4 text-center">
-                        <p>Already have an account? <Link href="/signup" className="text-blue-500">Sign Up</Link></p>
+                        <p>Don&apos;t have an account? <Link href="/signup" className="text-blue-500">Sign Up</Link></p>
                     </div>
                 </form>
             </div>

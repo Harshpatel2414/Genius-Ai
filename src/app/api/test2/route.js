@@ -40,8 +40,22 @@ export const POST = async (req) => {
             const modelMessage = await getModelResponse(promptWithCategories);
             const vectorResponse = await getEmbeddingVector(modelMessage);
             const queryVector = vectorResponse.embedding.values;
-            const priceMatch = query.match(/under \$(\d+)/);
-            const priceFilter = priceMatch ? parseFloat(priceMatch[1]) : null;
+
+            const inrPriceMatch = query.match(/(?:under|below)?\s?(\d+(?:[kK]|\s?rupees|\s?INR)?)/i);
+            const usdPriceMatch = query.match(/under \$(\d+)/i);
+            const conversionRate = 82; // Example conversion rate from USD to INR
+
+            let priceFilter = null;
+            if (inrPriceMatch) {
+                let priceInINR = parseFloat(inrPriceMatch[1].replace(/k/i, '000'));
+                if (isNaN(priceInINR)) {
+                    priceInINR = parseFloat(inrPriceMatch[1]);
+                }
+                priceFilter = priceInINR / conversionRate; // Convert INR to USD
+            } else if (usdPriceMatch) {
+                priceFilter = parseFloat(usdPriceMatch[1]);
+            }
+
             const ids = await searchProducts(queryVector, priceFilter);
 
             if (ids.length === 0) {

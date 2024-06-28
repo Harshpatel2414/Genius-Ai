@@ -7,11 +7,14 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useChat } from '@/context/ChatContext';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const UserInfo = ({ open, setOpen }) => {
   const { currentUser, handleLogout } = useAuth();
   const { setMessages } = useChat();
   const [showOptions, setShowOptions] = useState(false);
+  const router = useRouter()
+
   const handleToggleOptions = () => {
     setShowOptions((prev) => !prev);
   };
@@ -19,6 +22,7 @@ const UserInfo = ({ open, setOpen }) => {
   const handleUserLogout = () => {
     handleLogout()
     setMessages([]);
+    router.push('/')
     toast.success("Logut successfully")
     setShowOptions(false);
     if (window.innerWidth >= 768) {
@@ -30,6 +34,12 @@ const UserInfo = ({ open, setOpen }) => {
 
   const handleUpdateInfo = () => {
     setShowOptions(false);
+    router.push('/update-info')
+    if (window.innerWidth >= 768) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
   };
   if (!open) {
     return null

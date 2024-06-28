@@ -72,11 +72,14 @@ const SignupForm = () => {
     return (
         <div className="flex flex-col items-center justify-center h-full p-4 bg-gray-100">
             <div className="p-6 bg-white rounded-lg shadow-md shadow-zinc-100 w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+                <h2 className="text-2xl font-semibold text-center">Sign Up</h2>
                 <form onSubmit={handleSubmit} className="mt-4">
                     <div className="mb-4 flex items-center w-full">
                         <label className="flex w-full justify-center items-center text-gray-700 mb-2" htmlFor="image">
-                            <Image height={64} width={64} src={imagePreview || "/user.jpeg"} alt="Profile" className="w-16 h-16 rounded-full object-cover object-center border-2 border-blue-500" />
+                            <div className='flex flex-col justify-center w-full items-center'>
+                                <Image height={64} width={64} src={imagePreview || "/user.jpeg"} alt="Profile" className="w-16 h-16 rounded-full object-cover object-center border-2 border-blue-500" />
+                                <span className='capitalize mt-1 text-sm underline text-blue-500'>Select profile</span>
+                            </div>
                         </label>
                         <input
                             type="file"
@@ -152,7 +155,9 @@ const SignupForm = () => {
                         className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={loading}
                     >
-                        {loading ? 'Signing Up...' : 'Sign Up'}
+                        {loading ? <div className='w-full flex items-center justify-center'>
+                            <FaSpinner className="animate-spin w-6 h-6 text-gray-100" />
+                        </div> : 'Sign Up'}
                     </button>
                 </form>
                 <div className="mt-4 text-center">
