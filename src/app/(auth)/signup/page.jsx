@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { FaUser, FaEnvelope, FaLock, FaImage } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
 
 const SignupForm = () => {
     const router = useRouter();
