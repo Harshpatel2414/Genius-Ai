@@ -1,12 +1,25 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import TypingEffect from './TypingEffect';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
+import { useChat } from '@/context/ChatContext';
 
 const MessageContent = ({ message, chatId }) => {
   const [liked, setLiked] = useState(message.liked || false);
   const [disliked, setDisliked] = useState(message.unliked || false);
+  const { messages } = useChat()
+  const [lastMsg, setLastMsg] = useState(false)
+  useEffect(() => {
+    let lastMessage = messages[messages.length - 1]
+    if (message._id === lastMessage._id) {
+      setLastMsg(true)
+    } else {
+      setLastMsg(false)
+    }
+  }, [])
 
   const updateLikeStatus = async (liked, unliked) => {
     try {
@@ -43,7 +56,13 @@ const MessageContent = ({ message, chatId }) => {
     <div className={`flex flex-col gap-4 w-full ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
       <div>
         <div className={`p-4 drop-shadow-md shadow-zinc-100 rounded-lg ${message.role === 'user' ? 'rounded-tr-none ml-auto bg-zinc-100 user-message' : 'rounded-tl-none mr-auto bg-blue-50 assistant-message'}`}>
+          {
+          lastMsg ? (
           <TypingEffect content={message.content} />
+          ) : (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
+          )
+        }
         </div>
         {message.role === 'assistant' && (
           <div className="flex item-center mt-3 space-x-3 ml-2">

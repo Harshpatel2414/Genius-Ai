@@ -48,7 +48,7 @@ const UserInfo = ({ open, setOpen }) => {
     <div className="relative border-t border-gray-200 pt-4">
       {!currentUser ? (
         <div className="flex items-center space-x-4">
-          <FaUser className='w-12 text-gray-500 h-10 border border-gray-500 rounded-full p-2'/>
+          <FaUser className='w-12 text-gray-500 h-10 border border-gray-500 rounded-full p-2' />
           <Link onClick={() => {
             if (window.innerWidth >= 768) {
               setOpen(true);
@@ -61,27 +61,27 @@ const UserInfo = ({ open, setOpen }) => {
         </div>
       ) : (
         <div className="flex items-center space-x-4">
-          <div className="relative">
-            <div className="flex items-center space-x-4">
-              <div className='w-10 h-10 rounded-full border-2 border-blue-500 object-cover object-center overflow-hidden'>
-
-              <Image
-                width={40}
-                height={40}
-                src={currentUser.image || "/user.jpeg"}
-                alt="Avatar"
-                className=""
+          <div className="relative w-full">
+            <div className="flex items-center space-x-4 w-full justify-between">
+              <div className='flex gap-2 items-center'>
+                <Image
+                  width={40}
+                  height={40}
+                  quality={100}
+                  src={currentUser.image || "/user.jpeg"}
+                  alt="Avatar"
+                  className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover object-center"
                 />
-              </div>
-              <div>
+              <div className='flex flex-col'>
                 <p className="font-semibold capitalize">{currentUser.username}</p>
-                <p className="text-gray-500">{currentUser.email}</p>
+                <p className="text-gray-500 text-sm">{currentUser.email}</p>
+              </div>
               </div>
               <button
                 onClick={handleToggleOptions}
-                className="flex items-center focus:outline-none"
+                className={`flex items-center outline-none ${showOptions ? "text-blue-500": "text-gray-400"}`}
               >
-                <FaGear className="w-6 h-6 text-gray-400" />
+                <FaGear className="w-6 h-6" />
               </button>
             </div>
             {showOptions && (

@@ -4,15 +4,14 @@ import fetchInitialPrompt from "@/helpers/fetchInitialPrompt";
 import fetchPromptWithCategories from "@/helpers/fetchPromptWithCategories";
 import getModelResponse from "@/utils/getModelResponse";
 import fetchPromptWithNoProducts from "@/helpers/fetchPromptWithNoProducts";
-import fetchProductDetails from "@/utils/fetchProductDetails";
 import getFilteredProducts from "@/utils/getFilteredProducts";
 import fetchPromptWithProducts from "@/helpers/fetchPromptWithProducts";
 import fetchGeneralPrompt from "@/helpers/fetchGeneralPrompt";
 import fetchUniqueCategories from "@/utils/fetchUniqueCategories";
-import searchProducts from "@/utils/searchProducts";
 import getEmbeddingVector from "@/utils/getEmbeddingVector";
 import saveMessagesWithResponse from "@/utils/saveMessagesWithResponse";
 import { ObjectId } from "mongodb";
+import fetchProductWithVector from "@/utils/fetchProductWithVector";
 
 export const POST = async (req) => {
     try {
@@ -35,30 +34,18 @@ export const POST = async (req) => {
 
         if (initialResponse.toLowerCase().includes('product suggestions needed')) {
 
-            const categories = await fetchUniqueCategories();
+            const categories = await fetchUniqueCategories(store);
             const promptWithCategories = fetchPromptWithCategories(query, categories);
             const modelMessage = await getModelResponse(promptWithCategories);
             const vectorResponse = await getEmbeddingVector(modelMessage);
             const queryVector = vectorResponse.embedding.values;
 
-            const inrPriceMatch = query.match(/(?:under|below)?\s?(\d+(?:[kK]|\s?rupees|\s?INR)?)/i);
-            const usdPriceMatch = query.match(/under \$(\d+)/i);
-            const conversionRate = 82; // Example conversion rate from USD to INR
-
-            let priceFilter = null;
-            if (inrPriceMatch) {
-                let priceInINR = parseFloat(inrPriceMatch[1].replace(/k/i, '000'));
-                if (isNaN(priceInINR)) {
-                    priceInINR = parseFloat(inrPriceMatch[1]);
-                }
-                priceFilter = priceInINR / conversionRate; // Convert INR to USD
-            } else if (usdPriceMatch) {
-                priceFilter = parseFloat(usdPriceMatch[1]);
-            }
-
-            const ids = await searchProducts(queryVector, priceFilter);
-
-            if (ids.length === 0) {
+            const priceMatch = query.match(/under \$(\d+)/);
+            const priceFilter = priceMatch ? parseFloat(priceMatch[1]) : Infinity;
+            
+            const products = await fetchProductWithVector(queryVector,priceFilter,store)
+ 
+            if (products.length === 0) {
                 const content = await getModelResponse(fetchPromptWithNoProducts(query, assistantMessage));
                
                 const assistantResponse = {
@@ -77,7 +64,6 @@ export const POST = async (req) => {
                     chatId: newChatId
                 }, { status: 200 });
             } else {
-                const products = await fetchProductDetails(ids);
                 const filteredProducts = getFilteredProducts(products);
                 const content = await getModelResponse(fetchPromptWithProducts(filteredProducts, query, assistantMessage));                
 

@@ -38,7 +38,7 @@ const Conversations = ({ chatHistory ,setOpen}) => {
                   <li
                     onClick={e => handleClick(conversation._id)}
                     key={conversation._id}
-                    className="p-2 bg-gray-50 rounded truncate drop-shadow-sm cursor-pointer hover:bg-blue-100"
+                    className="p-2 bg-gray-50 rounded truncate drop-shadow-sm cursor-pointer select-none hover:bg-blue-100"
                   >
                     {conversation.title}
                   </li>

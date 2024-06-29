@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import Conversations from "./Conversations";
 import FavoriteProducts from "./FavoriteProducts";
 import Profile from "./Profile";
+import fetchConversationHistory from "@/utils/fetchConversationHistory";
+import fetchFavoriteProducts from "@/utils/fetchFavoriteProducts";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
 import { FaChevronDown, FaChevronRight, FaChevronUp, FaRegHeart } from "react-icons/fa";
@@ -14,7 +16,7 @@ import { FaRegComment } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(null);
-  const { chatHistory, favProducts } = useAuth();
+  const { chatHistory, favProducts ,setChatHistory, currentUser, setFavProducts,loading } = useAuth();
   const [open, setOpen] = useState(false)
   const sidebarRef = useRef(null);
   const { setMessages } = useChat();
@@ -34,6 +36,33 @@ const Sidebar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const dataFetchedRef = useRef(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentUser && !loading && !dataFetchedRef.current) {
+        await fetchConversationHistory(currentUser._id, setChatHistory);
+        dataFetchedRef.current = true;
+      }
+    };
+
+    if (currentUser && !loading) {
+      fetchData();
+    }
+  }, [currentUser, loading, setChatHistory]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentUser && !loading && !dataFetchedRef.current) {
+        await fetchFavoriteProducts(currentUser._id, setFavProducts);
+        dataFetchedRef.current = true;
+      }
+    };
+
+    if (currentUser && !loading) {
+      fetchData();
+    }
+  }, [currentUser, loading, setFavProducts]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -63,9 +92,17 @@ const Sidebar = () => {
       setOpen(true)
     }
   };
-
+  const handleAboutClick = (e)=>{
+    e.preventDefault();
+    router.push('/about')
+    if (window.innerWidth <= 768) {
+      setOpen(false);
+    } else {
+      setOpen(true)
+    }
+  }
   return (
-    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${!open ? "w-0 p-[2px] -translate-x-full" : "w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
+    <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${!open ? "w-0 p-[2px] -translate-x-full" : "w-2/3 md:w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
       <button onClick={() => setOpen(!open)} className="md:hidden cursor-pointer">
         <FaChevronRight className="w-8 h-10 rounded-md p-2 absolute top-12 -right-6 drop-shadow-md text-gray-100 bg-blue-500" />
       </button>
@@ -125,13 +162,12 @@ const Sidebar = () => {
             )}
           </li>
           <li>
-            {open && <button className="w-full text-left p-2 hover:bg-blue-50 rounded">
+            {open && <button onClick={handleAboutClick} className="w-full text-left p-2 hover:bg-blue-50 rounded">
               <div className="flex items-center gap-2 text-gray-700">
                 <FiInfo className="w-6 h-6"/>
                 <span>About Us</span>
               </div>
             </button>}
-
           </li>
         </ul>
       </nav>

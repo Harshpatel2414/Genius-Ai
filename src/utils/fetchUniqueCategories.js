@@ -2,13 +2,13 @@ import { MongoClient } from 'mongodb';
 
 const mongoURI = process.env.MONGO_URI;
 
-const fetchUniqueCategories = async () => {
+const fetchUniqueCategories = async (store) => {
     const client = new MongoClient(mongoURI);
 
     try {
         await client.connect();
         const db = client.db(process.env.DATABASE);
-        const collection = db.collection('products');
+        const collection = db.collection(store);
 
         const allTags = await collection.distinct('tags');
         const uniqueTags = new Set();

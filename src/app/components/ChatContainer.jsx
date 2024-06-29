@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState, useRef, useEffect, Suspense, lazy} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
 import Input from "./Input";
 import { useRouter, useSearchParams } from 'next/navigation'
 import fetchConversationHistory from "@/utils/fetchConversationHistory";
-import fetchFavoriteProducts from "@/utils/fetchFavoriteProducts";
-import Loading from "../loading";
-const Message = lazy(() => import("./Message")); 
+import Message from "./Message";
 
 const ChatContainer = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const { setChatHistory, store, currentUser, setFavProducts,loading } = useAuth();
+  const { setChatHistory, store, currentUser } = useAuth();
   const { messages, setMessages } = useChat();
   const chatEndRef = useRef(null);
   const searchParams = useSearchParams()
@@ -21,22 +19,7 @@ const ChatContainer = () => {
 
   const chatId = searchParams.get('id')
  
-  const dataFetchedRef = useRef(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (currentUser && !loading && !dataFetchedRef.current) {
-        await fetchConversationHistory(currentUser._id, setChatHistory);
-        await fetchFavoriteProducts(currentUser._id, setFavProducts);
-        dataFetchedRef.current = true;
-      }
-    };
-
-    if (currentUser && !loading) {
-      fetchData();
-    }
-  }, [currentUser, loading, setChatHistory, setFavProducts]);
-
+  
   useEffect(() => {
     const fetchChatHistory = async () => {
       if(!currentUser){
@@ -66,7 +49,7 @@ const ChatContainer = () => {
     if (chatId) {
       fetchChatHistory();
     }
-  }, [chatId,router]);
+  }, [chatId]);
 
   const handleSendMessage = async (inputMessage) => {
     if (inputMessage.length > 6) {
@@ -85,6 +68,7 @@ const ChatContainer = () => {
             messages: updatedMessages,
             chatId: chatId,
             userId: currentUser._id,
+            store: store
           }),
         });
 
@@ -129,7 +113,6 @@ const ChatContainer = () => {
   return (
     <div className="flex flex-col h-full w-full p-4 sm:p-2 md:p-4 lg:p-6">
       <div className="flex-1 overflow-y-auto space-y-4 hide-scrollbar">
-      <Suspense fallback={<Loading />}>
           {messages.length === 0 ? (
             <div className="flex justify-center items-center h-full hide-scrollbar">
               <div className="text-center text-gray-500">
@@ -147,8 +130,7 @@ const ChatContainer = () => {
               <Message key={index} message={message} chatId={chatId} />
             ))
           )}
-        </Suspense>
-        <div ref={chatEndRef} />
+        <div ref={chatEndRef}/>
         {isLoading && (
           <div className="flex items-center justify-start py-1 h-10 gap-1 pl-2">
             <div className="dot bounce-animation text-3xl text-blue-500 font-bold">

@@ -19,7 +19,7 @@ const fetchPromptWithProducts = (filteredProducts, query, assistantMessage) => {
     6. For each selected product, generate a detailed suggestion that includes:
         - **Title:** The product title
         - **Description:** A brief description of the product
-        - **Price:** The price in dollars
+        - **Price:** The price
 
     7. If the specific product the user is looking for is not available or released yet, acknowledge this and provide information on the closest available alternatives or the previous model.
 

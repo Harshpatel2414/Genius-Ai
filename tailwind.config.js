@@ -14,7 +14,16 @@ module.exports = {
       },
       dropShadow: {
         'smooth': '0 3px 3px rgb(0 0 0 / 0.03)',
-      }
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 1s ease-in-out',
+      },
     },
   },
   plugins: [],
