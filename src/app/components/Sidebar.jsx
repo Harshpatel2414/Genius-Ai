@@ -8,7 +8,7 @@ import fetchConversationHistory from "@/utils/fetchConversationHistory";
 import fetchFavoriteProducts from "@/utils/fetchFavoriteProducts";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
-import { FaChevronDown, FaChevronRight, FaChevronUp, FaRegHeart } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight, FaChevronUp, FaRegEnvelope, FaRegHeart } from "react-icons/fa";
 import { FiInfo } from "react-icons/fi";
 
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ import { FaRegComment } from "react-icons/fa6";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(null);
-  const { chatHistory, favProducts ,setChatHistory, currentUser, setFavProducts,loading } = useAuth();
+  const { chatHistory, favProducts, setChatHistory, currentUser, setFavProducts, loading } = useAuth();
   const [open, setOpen] = useState(false)
   const sidebarRef = useRef(null);
   const { setMessages } = useChat();
@@ -92,7 +92,8 @@ const Sidebar = () => {
       setOpen(true)
     }
   };
-  const handleAboutClick = (e)=>{
+
+  const handleAboutClick = (e) => {
     e.preventDefault();
     router.push('/about')
     if (window.innerWidth <= 768) {
@@ -101,6 +102,17 @@ const Sidebar = () => {
       setOpen(true)
     }
   }
+
+  const handleContactUsClick = (e) => {
+    e.preventDefault();
+    router.push('/contact')
+    if (window.innerWidth <= 768) {
+      setOpen(false);
+    } else {
+      setOpen(true)
+    }
+  }
+
   return (
     <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${!open ? "w-0 p-[2px] -translate-x-full" : "w-2/3 md:w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
       <button onClick={() => setOpen(!open)} className="md:hidden cursor-pointer">
@@ -162,9 +174,17 @@ const Sidebar = () => {
             )}
           </li>
           <li>
+            {open && <button onClick={handleContactUsClick} className="w-full text-left p-2 hover:bg-blue-50 rounded">
+              <div className="flex items-center gap-2 text-gray-700">
+                <FaRegEnvelope className="w-6 h-6" />
+                <span>Contact Us</span>
+              </div>
+            </button>}
+          </li>
+          <li>
             {open && <button onClick={handleAboutClick} className="w-full text-left p-2 hover:bg-blue-50 rounded">
               <div className="flex items-center gap-2 text-gray-700">
-                <FiInfo className="w-6 h-6"/>
+                <FiInfo className="w-6 h-6" />
                 <span>About Us</span>
               </div>
             </button>}

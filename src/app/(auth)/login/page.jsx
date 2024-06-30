@@ -11,7 +11,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const { setCurrentUser } = useAuth()
+    const { currentUser, setCurrentUser } = useAuth()
     const router = useRouter()
 
     const handleSubmit = async (e) => {
@@ -36,11 +36,14 @@ const LoginPage = () => {
 
         } catch (error) {
             console.error('Error:', error.message);
-        } finally {
+        }finally {
             setLoading(false);
         }
     };
 
+    if(currentUser){
+        router.push('/')
+    }
     return (
         <div className="flex flex-col items-center justify-center h-full p-4 bg-gray-100">
             <div className="p-6 bg-white rounded-lg shadow-md shadow-zinc-100 w-full max-w-md">
@@ -83,6 +86,7 @@ const LoginPage = () => {
                     <button
                         type="submit"
                         className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md ${loading ? 'cursor-not-allowed' : ''}`}
+                        disabled={loading}
                     >
                         {loading ? <div className='w-full flex items-center justify-center'>
                             <FaSpinner className="animate-spin w-6 h-6 text-gray-100" />

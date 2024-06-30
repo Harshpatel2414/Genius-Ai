@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,6 +9,7 @@ import { FaUser, FaEnvelope, FaLock, FaSpinner } from 'react-icons/fa';
 
 const SignupForm = () => {
     const router = useRouter();
+    const { currentUser, setCurrentUser } = useAuth()
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -17,6 +19,7 @@ const SignupForm = () => {
     });
     const [imagePreview, setImagePreview] = useState('');
     const [loading, setLoading] = useState(false);
+    const [imgError, setImgError] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -25,18 +28,24 @@ const SignupForm = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        if (file.size < 2 * 1024 * 1024) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setFormData({ ...formData, image: reader.result });
                 setImagePreview(reader.result);
             };
             reader.readAsDataURL(file);
+        } else {
+            setImgError(true)
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password.length < 8) {
+            toast.error('Password must be at least 8 characters');
+            return;
+        }
         if (formData.password !== formData.confirmPassword) {
             toast.error('Passwords do not match');
             return;
@@ -56,6 +65,7 @@ const SignupForm = () => {
             const result = await response.json();
 
             if (response.ok) {
+                setCurrentUser(result.user)
                 toast.success(result.message);
                 router.push('/');
             } else {
@@ -68,7 +78,9 @@ const SignupForm = () => {
             setLoading(false);
         }
     };
-
+    if (currentUser) {
+        router.push('/')
+    }
     return (
         <div className="flex flex-col items-center justify-center h-full p-4 bg-gray-100">
             <div className="p-6 bg-white rounded-lg shadow-md shadow-zinc-100 w-full max-w-md">
@@ -78,7 +90,7 @@ const SignupForm = () => {
                         <label className="flex w-full justify-center items-center text-gray-700 mb-2" htmlFor="image">
                             <div className='flex flex-col justify-center w-full items-center'>
                                 <Image height={64} width={64} src={imagePreview || "/user.jpeg"} alt="Profile" className="w-16 h-16 rounded-full object-cover object-center border-2 border-blue-500" />
-                                <span className='capitalize mt-1 text-sm underline text-blue-500'>Select profile</span>
+                                {imgError ? <span className='text-red-400 text-sm'>Upload image less than 2mb</span> : <span className='capitalize mt-1 text-sm underline text-blue-500'>change profile</span>}
                             </div>
                         </label>
                         <input
@@ -152,7 +164,7 @@ const SignupForm = () => {
 
                     <button
                         type="submit"
-                        className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md ${loading ? 'cursor-not-allowed' : ''}`}
                         disabled={loading}
                     >
                         {loading ? <div className='w-full flex items-center justify-center'>

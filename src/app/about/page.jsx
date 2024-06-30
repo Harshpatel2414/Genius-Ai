@@ -9,7 +9,7 @@ export const metadata = {
 const About = () => {
     return (
         <div className="h-full flex flex-col items-center bg-white overflow-y-scroll px-5 py-10 hide-scrollbar animate-fadeIn">
-            <div className="max-w-4xl h-fit w-full lg:w-3/4 bg-white  rounded-lg p-8 relative lg:text-justify">
+            <div className="max-w-4xl h-fit w-full lg:w-3/4 bg-white  rounded-lg px-0 py-8 md:p-8 relative lg:text-justify">
                 <Link href={'/'} className='top-4 right-4 absolute underline text-blue-500'>Back</Link>
                 <h1 className="text-3xl font-bold text-blue-500 mb-6 text-center">About Us</h1>
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
@@ -23,6 +23,12 @@ const About = () => {
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
                     Thank you for choosing GeniusAI. We look forward to assisting you and making your online journey more enjoyable and productive.
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                    If you have any questions or need further assistance, please feel free to <Link href="/contact" className="underline text-blue-500">contact us</Link>. We are here to help you with any inquiries or support you may need.
+                </p>
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                    Please make sure to read our <Link href="/terms-and-conditions" className="underline text-blue-500">Terms and Conditions</Link> to understand the rules and guidelines for using our services.
                 </p>
                 <div className="flex items-center justify-center mt-6">
                     {/* <img
