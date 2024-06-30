@@ -25,9 +25,13 @@ const PrivacyPolicy = () => {
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
                     The security of your data is important to us. While we strive to use commercially acceptable means to protect your personal data, we cannot guarantee its absolute security.
                 </p>
-                <footer className="mt-6 text-center text-gray-600">
+                <footer className="mt-2 text-center text-gray-600">
                     <p>&copy; {new Date().getFullYear()} GeniusAI. All rights reserved.</p>
                     <p>Designed and developed by the GeniusAI Team.</p>
+                    <p>
+                        <Link href="/terms-and-conditions" className="text-blue-500">Terms and Conditions</Link> | 
+                        <Link href="/about" className="text-blue-500"> About Us</Link>
+                    </p>
                 </footer>
             </div>
         </div>

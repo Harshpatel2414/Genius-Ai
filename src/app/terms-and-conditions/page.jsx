@@ -39,9 +39,13 @@ const TermsAndConditions = () => {
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
                     GeniusAI reserves the right, in its sole discretion, to modify or replace these Terms at any time. If the alterations constitute a material change to the Terms, we will notify you by posting an announcement on the Site. What constitutes a material change will be determined at our sole discretion.
                 </p>
-                <footer className="mt-6 text-center text-gray-600">
+                <footer className="mt-2 text-center text-gray-600">
                     <p>&copy; {new Date().getFullYear()} GeniusAI. All rights reserved.</p>
                     <p>Designed and developed by the GeniusAI Team.</p>
+                    <p>
+                        <Link href="/about" className="text-blue-500">About Us</Link> | 
+                        <Link href="/privacy-policy" className="text-blue-500"> Privacy Policy</Link>
+                    </p>
                 </footer>
             </div>
         </div>

@@ -31,11 +31,6 @@ const About = () => {
                     Please make sure to read our <Link href="/terms-and-conditions" className="underline text-blue-500">Terms and Conditions</Link> to understand the rules and guidelines for using our services.
                 </p>
                 <div className="flex items-center justify-center mt-6">
-                    {/* <img
-                        src="/images/genius-ai-logo.png" // Ensure you have a logo image in the public/images folder
-                        alt="GeniusAI Logo"
-                        className="h-32 w-auto"
-                    /> */}
                     <h1 className="text-lg font-semibold tracking-wider text-blue-500">
                         Genius<span className="text-zinc-700">AI</span>
                     </h1>
@@ -44,8 +39,8 @@ const About = () => {
                     <p>&copy; {new Date().getFullYear()} GeniusAI. All rights reserved.</p>
                     <p>Designed and developed by the GeniusAI Team.</p>
                     <p>
-                        <Link href="/terms" className="text-blue-500">Terms and Conditions</Link> |
-                        <Link href="/privacy" className="text-blue-500"> Privacy Policy</Link>
+                        <Link href="/terms-and-conditions" className="text-blue-500">Terms and Conditions</Link> | 
+                        <Link href="/privacy-policy" className="text-blue-500"> Privacy Policy</Link>
                     </p>
                 </footer>
             </div>
