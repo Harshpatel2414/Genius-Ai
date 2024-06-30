@@ -60,7 +60,7 @@ const Contact = () => {
                 <Link href={'/'} className='top-4 right-4 absolute underline text-blue-500'>Back</Link>
                 <h1 className="text-3xl font-bold text-blue-500 mb-6 text-center">Contact Us</h1>
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                    Welcome to <span className="font-semibold text-blue-500">Genius<span className="text-zinc-700">AI</span></span>. If you have any questions, suggestions, or need further assistance, please fill out the form below and we'll get back to you as soon as possible.
+                    Welcome to <span className="font-semibold text-blue-500">Genius<span className="text-zinc-700">AI</span></span>. If you have any questions, suggestions, or need further assistance, please fill out the form below and we&apos;ll get back to you as soon as possible.
                 </p>
                 <div className="max-w-lg h-fit w-full lg:w-full bg-white shadow-md rounded-lg p-5 relative lg:text-justify mx-auto mt-8">
                     <form onSubmit={handleSubmit}>

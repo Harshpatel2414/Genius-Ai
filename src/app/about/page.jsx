@@ -43,6 +43,10 @@ const About = () => {
                 <footer className="mt-2 text-center text-gray-600">
                     <p>&copy; {new Date().getFullYear()} GeniusAI. All rights reserved.</p>
                     <p>Designed and developed by the GeniusAI Team.</p>
+                    <p>
+                        <Link href="/terms" className="text-blue-500">Terms and Conditions</Link> |
+                        <Link href="/privacy" className="text-blue-500"> Privacy Policy</Link>
+                    </p>
                 </footer>
             </div>
         </div>

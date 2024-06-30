@@ -21,7 +21,7 @@ const TermsAndConditions = () => {
                 </p>
                 <h2 className="text-xl font-semibold text-blue-500 mb-2 mt-3">2. Privacy Policy</h2>
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
-                    Our privacy policy, which sets out how we will use your information, can be found at [Privacy Policy Link]. By using this website, you consent to the processing described therein and warrant that all data provided by you is accurate.
+                    Our privacy policy, which sets out how we will use your information, can be found at <Link href={'/privacy-policy'} className="underline text-blue-500">Privacy Policy</Link>. By using this website, you consent to the processing described therein and warrant that all data provided by you is accurate.
                 </p>
                 <h2 className="text-xl font-semibold text-blue-500 mb-2 mt-3">3. Intellectual Property</h2>
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">

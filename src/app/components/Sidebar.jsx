@@ -112,7 +112,7 @@ const Sidebar = () => {
       setOpen(true)
     }
   }
-
+  
   return (
     <aside ref={sidebarRef} className={`bg-white border-r border-gray-200 transition-transform md:transition-none duration-300 ease-in-out ${!open ? "w-0 p-[2px] -translate-x-full" : "w-2/3 md:w-64 open-sidebar z-20 translate-x-0"} p-4 md:flex flex-col flex z-40 relative`}>
       <button onClick={() => setOpen(!open)} className="md:hidden cursor-pointer">
