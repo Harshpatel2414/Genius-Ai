@@ -28,7 +28,10 @@ const fetchProductWithVector = async (vector, maxPrice = Infinity,store) => {
         if (maxPrice !== Infinity) {
             pipeline.push({
                 $match: {
-                    "firstVariant.price": { $lte: maxPrice }
+                    $or: [
+                        { "price": { $exists: true, $lte: maxPrice } },
+                        { "firstVariant.price": { $lte: maxPrice } }
+                    ]
                 }
             });
         }
@@ -39,7 +42,13 @@ const fetchProductWithVector = async (vector, maxPrice = Infinity,store) => {
                 title: 1,
                 description: 1,
                 imageUrl: 1,
-                price: "$firstVariant.price",
+                price: {
+                    $cond: {
+                        if: { $eq: ["$price", undefined] },
+                        then: "$firstVariant.price",
+                        else: "$price"
+                    }
+                }
             }
         });
 
@@ -54,4 +63,3 @@ const fetchProductWithVector = async (vector, maxPrice = Infinity,store) => {
 };
 
 export default fetchProductWithVector;
-
