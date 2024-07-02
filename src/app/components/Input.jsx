@@ -19,6 +19,12 @@ const Input = ({ handleSendMessage }) => {
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    };
+
     return (
         <div className="flex items-center gap-4 mt-4 drop-shadow-smooth">
             <input
@@ -26,6 +32,7 @@ const Input = ({ handleSendMessage }) => {
                 placeholder="Ask your query"
                 value={inputValue}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 className="flex-1 p-2 sm:p-1 md:p-2 lg:p-3 border rounded-lg outline-none"
             />
             <button

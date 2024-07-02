@@ -21,6 +21,7 @@ const Sidebar = () => {
   const sidebarRef = useRef(null);
   const { setMessages } = useChat();
   const router = useRouter()
+  const dataFetchedRef = useRef(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +37,6 @@ const Sidebar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const dataFetchedRef = useRef(false);
 
   useEffect(() => {
     const fetchData = async () => {

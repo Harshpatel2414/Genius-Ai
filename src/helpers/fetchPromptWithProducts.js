@@ -23,7 +23,7 @@ const fetchPromptWithProducts = (filteredProducts, query, assistantMessage) => {
 
     7. If the specific product the user is looking for is not available or released yet, acknowledge this and provide information on the closest available alternatives or the previous model.
 
-    8. If no matching products are found based on the user's query, provide detailed information about the product the user is looking for, and suggest the closest available alternatives from our list.
+    8. If no matching products are found based on the user's search, provide detailed information about the product the user is looking for, and suggest the closest available alternatives from our list.
 
     9. Ensure the response is informative and helps the user make an informed decision.
 
