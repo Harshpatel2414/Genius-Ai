@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useAuth } from '@/context/AuthContext';
@@ -55,7 +54,7 @@ const ProductCard = ({ product }) => {
       await fetchFavoriteProducts(currentUser._id, setFavProducts);
     } catch (error) {
       console.error('Error updating product in favorites:', error.message);
-      
+
       setLocalFavorites((prevFavorites) => {
         const revertedFavorites = newFavoriteState
           ? prevFavorites.filter((favProduct) => favProduct.id !== id)

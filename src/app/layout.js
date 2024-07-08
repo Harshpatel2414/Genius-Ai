@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
+import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
 import './globals.css';
 import { AuthContextProvider } from '@/context/AuthContext';
 import { ChatContextProvider } from '@/context/ChatContext';
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         <AuthContextProvider>
           <ChatContextProvider>
             <div className="flex flex-col h-dvh">
-            <Toaster position="top-center" />
+              <Toaster position="top-center" />
               <Navbar />
               <div className="flex flex-1 overflow-hidden relative">
                 <Sidebar />

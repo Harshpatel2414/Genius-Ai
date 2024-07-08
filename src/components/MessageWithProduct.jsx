@@ -53,7 +53,7 @@ const MessageContent = ({ message, chatId }) => {
   };
 
   return (
-    <div className={`flex flex-col gap-4 w-full ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
+    <div className={`flex flex-col gap-4 w-full mb-4 ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
       <div>
         <div className={`p-4 drop-shadow-md shadow-zinc-100 rounded-lg ${message.role === 'user' ? 'rounded-tr-none ml-auto bg-zinc-100 user-message' : 'rounded-tl-none mr-auto bg-blue-50 assistant-message'}`}>
           {

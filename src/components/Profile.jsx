@@ -74,7 +74,7 @@ const UserInfo = ({ open, setOpen }) => {
                 />
               <div className='flex flex-col'>
                 <p className="font-semibold capitalize">{currentUser.username}</p>
-                <p className="text-gray-500 text-sm">{currentUser.email}</p>
+                <p className="text-gray-500 text-sm truncate">{currentUser.email}</p>
               </div>
               </div>
               <button

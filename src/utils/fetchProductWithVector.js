@@ -63,3 +63,4 @@ const fetchProductWithVector = async (vector, maxPrice = Infinity,store) => {
 };
 
 export default fetchProductWithVector;
+

@@ -18,7 +18,7 @@ const Input = ({ handleSendMessage }) => {
             toast.error("Login is needed!")
         }
     };
-
+    
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             sendMessage();

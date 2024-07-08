@@ -7,24 +7,28 @@ import Input from "./Input";
 import { useRouter, useSearchParams } from 'next/navigation'
 import fetchConversationHistory from "@/utils/fetchConversationHistory";
 import Message from "./Message";
+import Loading from "@/app/loading";
 
 const ChatContainer = () => {
-
+  const[isLoadMessages, setIsLoadMessages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { setChatHistory, store, currentUser } = useAuth();
+  const { setChatHistory, store, currentUser, setFavProducts, loading } = useAuth();
   const { messages, setMessages } = useChat();
   const chatEndRef = useRef(null);
   const searchParams = useSearchParams()
   const router = useRouter()
 
   const chatId = searchParams.get('id')
- 
-  
+
+
   useEffect(() => {
     const fetchChatHistory = async () => {
-      if(!currentUser){
+      if (!currentUser) {
         router.push('/')
-      }else{
+      } else {
+        if(messages.length > 1){
+          setIsLoadMessages(true) 
+        }
         try {
           const response = await fetch("/api/get-chat", {
             method: "POST",
@@ -42,6 +46,8 @@ const ChatContainer = () => {
           }
         } catch (error) {
           console.error("Error fetching chat history:", error);
+        }finally{
+          setIsLoadMessages(false)
         }
       }
     };
@@ -59,7 +65,7 @@ const ChatContainer = () => {
       setIsLoading(true);
 
       try {
-        const res = await fetch("/api/chat", {
+        const res = await fetch("/api/test2", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -113,7 +119,8 @@ const ChatContainer = () => {
   return (
     <div className="flex flex-col h-full w-full p-4 sm:p-2 md:p-4 lg:p-6">
       <div className="flex-1 overflow-y-auto space-y-4 hide-scrollbar">
-          {messages.length === 0 ? (
+        {isLoadMessages ? <Loading/>
+        : <>{messages.length === 0 ? (
             <div className="flex justify-center items-center h-full hide-scrollbar">
               <div className="text-center text-gray-500">
                 <p className="mb-4 text-lg">
@@ -130,7 +137,9 @@ const ChatContainer = () => {
               <Message key={index} message={message} chatId={chatId} />
             ))
           )}
-        <div ref={chatEndRef}/>
+          <div ref={chatEndRef} />
+          </>
+        }
         {isLoading && (
           <div className="flex items-center justify-start py-1 h-10 gap-1 pl-2">
             <div className="dot bounce-animation text-3xl text-blue-500 font-bold">
