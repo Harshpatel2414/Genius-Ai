@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white px-4 py-2 flex justify-between items-center relative drop-shadow-smooth z-20">
+    <nav className="bg-white px-4 py-2 flex justify-between items-center relative drop-shadow-smooth z-50">
       <h1 className="text-lg font-semibold tracking-wider text-blue-500">
         Genius<span className="text-zinc-700">AI</span>
       </h1>
