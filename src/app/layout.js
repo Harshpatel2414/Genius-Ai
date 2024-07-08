@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
+import Navbar from '@/components/Navbar';
+import Sidebar from '@/components/Sidebar';
 import './globals.css';
 import { AuthContextProvider } from '@/context/AuthContext';
 import { ChatContextProvider } from '@/context/ChatContext';
