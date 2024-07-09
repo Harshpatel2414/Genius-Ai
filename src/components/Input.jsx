@@ -1,10 +1,12 @@
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 const Input = ({ handleSendMessage }) => {
     const [inputValue, setInputValue] = useState('');
     const {currentUser} = useAuth()
+    const router = useRouter()
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
     };
@@ -15,10 +17,11 @@ const Input = ({ handleSendMessage }) => {
             setInputValue('');
         }else{
             setInputValue("")
+            router.push("/login")
             toast.error("Login is needed!")
         }
     };
-
+    
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             sendMessage();

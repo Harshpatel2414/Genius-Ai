@@ -14,6 +14,7 @@
     "bcrypt": "^5.1.1",
     "mongodb": "^6.7.0",
     "next": "14.2.4",
+    "nodemailer": "^6.9.14",
     "pinecone-client": "^2.0.0",
     "react": "^18",
     "react-dom": "^18",

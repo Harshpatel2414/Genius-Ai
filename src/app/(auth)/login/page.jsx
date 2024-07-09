@@ -82,6 +82,9 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
+                        <div className="mt-2">
+                            <Link href="/forgot-password" className="text-blue-500 text-sm">Forgot Password?</Link>
+                        </div>
                     </div>
                     <button
                         type="submit"
