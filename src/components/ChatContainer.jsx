@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useChat } from "@/context/ChatContext";
 import Input from "./Input";
@@ -10,7 +10,7 @@ import Message from "./Message";
 import Loading from "@/app/loading";
 
 const ChatContainer = () => {
-  const[isLoadMessages, setIsLoadMessages] = useState(false);
+  const [isLoadMessages, setIsLoadMessages] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { setChatHistory, store, currentUser } = useAuth();
   const { messages, setMessages } = useChat();
@@ -26,8 +26,8 @@ const ChatContainer = () => {
       if (!currentUser) {
         router.push('/')
       } else {
-        if(messages.length > 1){
-          setIsLoadMessages(true) 
+        if (messages.length > 1 || messages.length < 1) {
+          setIsLoadMessages(true)
         }
         try {
           const response = await fetch("/api/get-chat", {
@@ -46,7 +46,7 @@ const ChatContainer = () => {
           }
         } catch (error) {
           console.error("Error fetching chat history:", error);
-        }finally{
+        } finally {
           setIsLoadMessages(false)
         }
       }
@@ -119,8 +119,8 @@ const ChatContainer = () => {
   return (
     <div className="flex flex-col h-full w-full p-4 sm:p-2 md:p-4 lg:p-6">
       <div className="flex-1 overflow-y-auto space-y-4 hide-scrollbar">
-        {isLoadMessages ? <Loading/>
-        : <>{messages.length === 0 ? (
+        {isLoadMessages ? <Loading />
+          : <>{messages.length === 0 ? (
             <div className="flex justify-center items-center h-full hide-scrollbar">
               <div className="text-center text-gray-500">
                 <p className="mb-4 text-lg">
@@ -137,7 +137,7 @@ const ChatContainer = () => {
               <Message key={index} message={message} chatId={chatId} />
             ))
           )}
-          <div ref={chatEndRef} />
+            <div ref={chatEndRef} />
           </>
         }
         {isLoading && (

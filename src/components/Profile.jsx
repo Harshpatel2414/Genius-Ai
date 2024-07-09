@@ -72,16 +72,16 @@ const UserInfo = ({ open, setOpen }) => {
                   alt="Avatar"
                   className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover object-center"
                 />
-              <div className='flex flex-col'>
-                <p className="font-semibold capitalize">{currentUser.username}</p>
-                <p className="text-gray-500 text-sm">{currentUser.email}</p>
-              </div>
+                <div className='flex flex-col'>
+                  <p className="font-semibold capitalize">{currentUser.username}</p>
+                  <p className="text-gray-500 text-sm truncate">{currentUser.email}</p>
+                </div>
               </div>
               <button
                 onClick={handleToggleOptions}
-                className={`flex items-center outline-none ${showOptions ? "text-blue-500": "text-gray-400"}`}
+                className={`flex items-center outline-none ${showOptions ? "text-blue-500" : "text-gray-400"}`}
               >
-                <FaGear className="w-6 h-6" />
+                <FaGear className={`w-6 h-6 transition-all duration-500 ${showOptions ? "rotate-90" : '-rotate-90'}`} />
               </button>
             </div>
             {showOptions && (

@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
+import { LiaAtomSolid } from "react-icons/lia";
 import React, { useState } from "react";
 
 const Navbar = () => {
@@ -13,9 +14,12 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white px-4 py-2 flex justify-between items-center relative drop-shadow-smooth z-50">
+      <div className="flex items-center gap-2">
+      <LiaAtomSolid className="w-10 h-10 text-blue-500" />
       <h1 className="text-lg font-semibold tracking-wider text-blue-500">
         Genius<span className="text-zinc-700">AI</span>
       </h1>
+      </div>
       <div className="relative">
         <div className="flex items-center space-x-4 z-20">
           <div className="relative">
